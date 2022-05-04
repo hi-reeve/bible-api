@@ -119,3 +119,8 @@ To run this project, you will need to add the following environment variables to
 | `query`      | `string` | **Required**. query string of the search content |
 
 
+
+## Contributing
+
+Contributions are always welcome!
+
