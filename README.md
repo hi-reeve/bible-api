@@ -1,73 +1,121 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Bible API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A simple Bible API based on [Bible API](https://docs.api.bible/)
+build using [NestJs](https://nestjs.com/) and host using [render](https://render.com/)
 
 ## Installation
 
-```bash
-$ npm install
-```
-
-## Running the app
+Clone this repo and install this project with pnpm
 
 ```bash
-# development
-$ npm run start
+  cd my-project
+  pnpm i
+```
+    
+## Environment Variables
 
-# watch mode
-$ npm run start:dev
+To run this project, you will need to add the following environment variables to your .env file
 
-# production mode
-$ npm run start:prod
+`BASE_URL` : https://api.scripture.api.bible/v1
+
+`API_KEY` : YOUR_API_KEY
+
+`REDIS_URL` : YOUR_REDIS_URL
+
+`REDIS_CACHE_TTL` : 3600
+
+
+## Demo
+
+[Demo](https://bible-api.onrender.com/)
+
+
+## API Reference
+
+#### Get all available bible version
+
+```http
+  GET /bible
 ```
 
-## Test
+| Query | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | **Required**. Bible name search |
 
-```bash
-# unit tests
-$ npm run test
+#### Get bible detail
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```http
+  GET /bible/${bibleId}
 ```
 
-## Support
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+#### Get all books on selected bible
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```http
+  GET /bible/${bibleId}/books
+```
 
-## License
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
 
-Nest is [MIT licensed](LICENSE).
+#### Get books detail
+
+```http
+  GET /bible/${bibleId}/books/${booksId}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
+| `booksId`      | `string` | **Required**. Id of selected books |
+
+#### Get all chapters on books
+
+```http
+  GET /bible/${bibleId}/books/${booksId}/chapters
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
+| `booksId`      | `string` | **Required**. Id of selected books |
+
+#### Get chapter detail
+
+```http
+  GET /bible/${bibleId}/chapters/${chapterId}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
+| `chapterId`      | `string` | **Required**. Id of selected chapter |
+
+#### Get verses list on chapters
+
+```http
+  GET /bible/${bibleId}/chapters/${chapterId}/verses
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `bibleId`      | `string` | **Required**. Id of bible version |
+| `chapterId`      | `string` | **Required**. Id of selected chapter |
+
+#### Search on entire bible
+
+```http
+  GET /bible/${bibleId}/search
+```
+
+| Query | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `query`      | `string` | **Required**. query string of the search content |
+
+
